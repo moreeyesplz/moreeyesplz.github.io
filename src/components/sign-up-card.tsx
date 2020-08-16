@@ -1,14 +1,7 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardMedia, CardActions, Button, makeStyles } from '@material-ui/core';
+import { Card, CardContent, CardHeader, CardMedia, CardActions, Button } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-
-    })
-);
-
-export default function ListCard (){
-    const classes = useStyles();
-    
+export default function ListCard (){    
     return(
         <Card>
             <CardContent>
@@ -18,7 +11,6 @@ export default function ListCard (){
             </CardContent>
             <CardMedia
                 image="../assets/github.jpg"
-                title="Paella dish"
             />
             <CardActions>
                 <Button>Go to GitHub</Button>

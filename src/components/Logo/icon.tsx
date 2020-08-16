@@ -4,7 +4,7 @@ import './logo.sass';
 export default function Logo(){
     return(
         <div className='logo' style={{height: 'auto', flexFlow: 'row nowrap', justifyContent: 'center'}}>
-            <h2 className='color-text' style={{fontSize: '30px'}}>👀</h2>
+            <h2 className='color-text' style={{fontSize: '30px'}}><span role="img" aria-label="eyes">👀</span></h2>
             <h2 className='color-text' style={{fontSize: '40px', marginTop: '5px'}}>MEEP</h2>
         </div>
     )

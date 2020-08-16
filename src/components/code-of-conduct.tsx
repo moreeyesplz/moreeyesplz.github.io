@@ -1,6 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
-import { Typography, Paper, List, ListItem, Button, Divider, makeStyles } from '@material-ui/core';
+import { Typography, Paper, List, ListItem, Button, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -29,7 +28,7 @@ export default function UserStats() {
 
     return (
         <Paper elevation={0} className={classes.container}>
-            <Typography variant="h5">✨ Code of Conduct</Typography>
+            <Typography variant="h5"><span role="img" aria-label="sparkle">✨</span> Code of Conduct</Typography>
             <div className={classes.divider}></div>
             <Typography variant="h6">Offering a set of eyes?</Typography>
             <br />

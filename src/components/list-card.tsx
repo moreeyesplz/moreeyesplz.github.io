@@ -94,7 +94,7 @@ export default function ListCard (){
                         <Grid item xs={11} sm container>
                             <Grid item direction="row" spacing={2} container>
                                 <Grid item xs={12}>
-                                    <Typography>Duchess-Toffee 👀 meeped 2 days ago</Typography>
+                                    <Typography>Duchess-Toffee <span role="img" aria-label="eyes">👀</span> meeped 2 days ago</Typography>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Typography className={classes.header} variant="h5">

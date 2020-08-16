@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const issues = new Issues;
+const issues = new Issues();
 
 function App() {
   const classes = useStyles();
@@ -53,7 +53,7 @@ function App() {
         <Grid direction="row" spacing={3} container>
 
 
-          <Grid item direction="column" xs={3} spacing={2} container>
+          <Grid item direction="column" wrap="nowrap" xs={3} spacing={2} container>
             <Grid item>
               <div className={classes.logo}>
                 <Logo />
@@ -67,12 +67,12 @@ function App() {
             </Grid>
           </Grid>
 
-          <Grid item xs={9} spacing={2} container>
+          <Grid item xs={9} spacing={2} direction="column" wrap="nowrap" container>
             <Grid item xs={12}>
-              <SignUpCard />
+                <SignUpCard /> 
             </Grid>
 
-            <Grid item xs={12} spacing={0} justify="space-between" container>
+            <Grid item xs={12} justify="space-between" container>
               <Grid item direction="row" xs={8} spacing={1} alignContent="flex-start" container>
                 {cards}
               </Grid>
@@ -86,10 +86,8 @@ function App() {
                 </Grid>
               </Grid>
             </Grid>
+
           </Grid>
-
-
-
         </Grid>
       </Container>
     </div>
