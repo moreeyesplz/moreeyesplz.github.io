@@ -26,7 +26,7 @@ jobs:
         git config --local user.email "bot@moreeyesplz.com"
         git config --local user.name "themeepbot"
         git checkout site
-        mv build/* .
+        rsync -a build/ ./
         rm -rf build
         git add .
         git commit -m'Automated build'
