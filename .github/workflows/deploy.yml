@@ -15,7 +15,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: ${{ runner.os }}-${{ hashFiles('node_modules') }}
+        key: ${{ runner.os }}-${{ hashFiles('package.json') }}
     - name: install dependencies
       if: steps.cache.outputs.cache-hit != 'true'
       run: npm install
