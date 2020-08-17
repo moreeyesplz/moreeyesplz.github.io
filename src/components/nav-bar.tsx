@@ -70,104 +70,109 @@ export default function NavBar (props: {isUserActive: boolean}){
 
     const open = Boolean(anchorIcon);
 
-    const displayUserActions = props.isUserActive ? 
-        <Grid item>
-            <Avatar alt="username" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}/>
-            <Menu
-                className={classes.menu}
-                anchorEl={anchorMenu}
-                keepMounted
-                open={Boolean(anchorMenu)}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-            >
-                <MenuItem className={classes["MuiMenuItem-root"]} onClick={handleClose}>
-                    <Typography variant="h6" >Duchess-Toffee</Typography>
-                    <Typography>100 pts</Typography>
-                </MenuItem>
-                <Divider/>
-                <MenuItem className={classes["menu-item"]} onClick={handleClose}>Messages</MenuItem>
-                <MenuItem className={classes["menu-item"]} onClick={handleClose}>My Posts</MenuItem>
-                <MenuItem className={classes["menu-item"]} onClick={handleClose}>Settings</MenuItem>
-                <MenuItem className={classes["menu-item"]} onClick={handleClose}>Logout</MenuItem>
-            </Menu>
+    const displayNavBar = props.isUserActive ? 
+        <Grid container alignItems="center" spacing={0}>
+            <Grid item xs={3} onClick={() => window.location.href="https:www.moreeyesplz.com"}>
+                <Icon />
+            </Grid>
+            <Grid item xs={6}>
+                <TextField 
+                    fullWidth
+                    placeholder="Search..."
+                    variant="outlined"
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <SearchIcon />
+                            </InputAdornment>
+                        )
+                    }}
+                />
+            </Grid>                    
+            <Grid item xs={3} container alignItems="center" justify="flex-end" spacing={3}>
+                <Grid item className={classes["icon-hover"]}
+                    aria-owns={open ? 'mouse-over-popover' : undefined}
+                    aria-haspopup="true"
+                    color="secondary"
+                    onMouseEnter={handlePopoverOpen}
+                    onMouseLeave={handlePopoverClose}
+                    onClick={() => window.location.href="https://github.com/marketplace/actions/meep-scanner"}
+                    >
+                    <GitHubIcon className="nav-icon" />
+                    <Popover
+                        className={classes.popover}
+                        classes={{paper: classes.paper}}
+                        open={open}
+                        anchorEl={anchorIcon}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                        onClose={handlePopoverClose}
+                        disableRestoreFocus>
+                        <Typography variant="caption">GitHub Actions Marketplace</Typography>
+                    </Popover>
+                </Grid>
+                <Grid item className={classes["icon-hover"]}>
+                    <Badge color="secondary" variant="dot" invisible={false}>
+                        <NotificationsIcon className="nav-icon" />
+                    </Badge>
+                </Grid>
+                <Grid item>
+                    <Avatar alt="username" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}/>
+                    <Menu
+                        className={classes.menu}
+                        anchorEl={anchorMenu}
+                        keepMounted
+                        open={Boolean(anchorMenu)}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                    >
+                        <MenuItem className={classes["MuiMenuItem-root"]} onClick={handleClose}>
+                            <Typography variant="h6" >Duchess-Toffee</Typography>
+                            <Typography>100 pts</Typography>
+                        </MenuItem>
+                        <Divider/>
+                        <MenuItem className={classes["menu-item"]} onClick={handleClose}>Messages</MenuItem>
+                        <MenuItem className={classes["menu-item"]} onClick={handleClose}>My Posts</MenuItem>
+                        <MenuItem className={classes["menu-item"]} onClick={handleClose}>Settings</MenuItem>
+                        <MenuItem className={classes["menu-item"]} onClick={handleClose}>Logout</MenuItem>
+                    </Menu>
+                </Grid>
+            </Grid>
         </Grid>
         :
-        <Grid item>
-            <Button variant="outlined" className={classes.loginButton} onClick={() => window.location.href="https://github.com/login/oauth/authorize?client_id=ac67cef96ff2922c4a3c"}>Login</Button>
-            <Button variant="contained" color="secondary" className={classes.signUpButton}  onClick={() => window.location.href="https://github.com/login/oauth/authorize?client_id=ac67cef96ff2922c4a3c"}>Sign Up</Button>
+        <Grid container alignItems="center">
+            <Grid item xs={3} onClick={() => window.location.href="http://localhost:3002/"}>
+                <Icon />
+            </Grid>
+            <Grid item xs={9} container alignItems="center" justify="flex-end" spacing={3}>
+                <Grid item>
+                    <Button variant="outlined" color="inherit" href="https://github.com/marketplace/actions/meep-scanner">GitHub MarketPlace <GitHubIcon style={{marginLeft:"8px"}}/> </Button>
+                </Grid>
+                <Grid item>
+                    <Button variant="contained" color="secondary" href="https://github.com/login/oauth/authorize?client_id=ac67cef96ff2922c4a3c">Login</Button>
+                </Grid>
+            </Grid>
         </Grid>
+        
 
-    const displaySearchBar = props.isUserActive ?
-        <TextField 
-            fullWidth
-            placeholder="Search..."
-            variant="outlined"
-            InputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">
-                        <SearchIcon />
-                    </InputAdornment>
-                )
-            }}
-        />
-        :
-        null
 
     return (
         <AppBar>
             <Toolbar>
-                <Grid container alignItems="center" spacing={0}>
-                    <Grid item xs={3}>
-                        <Icon />
-                    </Grid>
-                    <Grid item xs={6}>
-                        {displaySearchBar}
-                    </Grid>                    
-                    <Grid item xs={3} container alignItems="center" justify="flex-end" spacing={3}>
-                        <Grid item className={classes["icon-hover"]}
-                            aria-owns={open ? 'mouse-over-popover' : undefined}
-                            aria-haspopup="true"
-                            color="secondary"
-                            onMouseEnter={handlePopoverOpen}
-                            onMouseLeave={handlePopoverClose}
-                            onClick={() => window.location.href="https://github.com/marketplace/actions/meep-scanner"}
-                            >
-                            <GitHubIcon className="nav-icon" />
-                            <Popover
-                                className={classes.popover}
-                                classes={{paper: classes.paper}}
-                                open={open}
-                                anchorEl={anchorIcon}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'center',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'center',
-                                }}
-                                onClose={handlePopoverClose}
-                                disableRestoreFocus>
-                                <Typography variant="caption">GitHub Store Page</Typography>
-                            </Popover>
-                        </Grid>
-                        <Grid item className={classes["icon-hover"]}>
-                            <Badge color="secondary" variant="dot" invisible={false}>
-                                <NotificationsIcon className="nav-icon" />
-                            </Badge>
-                        </Grid>                        
-                        {displayUserActions}
-                    </Grid>
-                </Grid>
-                
+                {displayNavBar}            
             </Toolbar>
         </AppBar>
     )

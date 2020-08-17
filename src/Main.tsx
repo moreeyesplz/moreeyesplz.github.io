@@ -8,6 +8,7 @@ import Filters from './components/filters';
 import Messages from './components/message-feed';
 import Conduct from './components/code-of-conduct';
 import WelcomeCard from './components/welcome-card';
+import Footer from './components/footer';
 import Issues from './models/issues';
 
 const useStyles = makeStyles((theme) => ({
@@ -98,12 +99,11 @@ function App() {
                 </Grid>
               </Grid>
             </Grid>
-
           </Grid>
         </Grid>
       </Container>
+      <Footer isUserActive={true}/>
     </div>
-
   );
 }
 

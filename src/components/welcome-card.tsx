@@ -51,7 +51,7 @@ export default function WelcomeCard (){
                     onClick={() => window.location.href="https://github.com/marketplace/actions/meep-scanner"}
                 />
             <CardActions className={classes.buttonContainer}>
-                <Button variant="contained" color="primary" size="large" onClick={() => window.location.href="https://github.com/marketplace/actions/meep-scanner"}>Our GitHub Store Page</Button>
+                <Button variant="contained" color="primary" size="large" href="https://github.com/marketplace/actions/meep-scanner">Our GitHub Actions Page</Button>
             </CardActions>
         </Card>
     )
