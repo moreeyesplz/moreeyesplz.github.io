@@ -43,7 +43,7 @@ export default function UserStats() {
 
 
     return(
-        <Card>
+        <Card elevation={0}>
             <CardContent className={classes["MuiCardContent-root"]}>
                 <CardHeader className={classes.header} title="📮 Messages"/>
                 <Divider light/>

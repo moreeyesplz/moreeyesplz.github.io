@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, List, ListItem, Chip, makeStyles, Divider } from '@material-ui/core';
+import { Card, CardContent, CardHeader, List, ListItem, Chip, makeStyles, Divider, TextField, InputAdornment } from '@material-ui/core';
 import CodeIcon from '@material-ui/icons/Code';
 import BuildIcon from '@material-ui/icons/BuildOutlined';
 import Star from '@material-ui/icons/StarBorderOutlined';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
         '& > *' : {
             margin: theme.spacing(.5, 1, .5, 0),
         }
+    },
+    searchTags: {
+        margin: theme.spacing(0, 0, "8px", 0)
     }
 }));
 
@@ -52,12 +56,22 @@ export default function UserStats() {
     ]);
 
     return (
-        <Card>
+        <Card elevation={0}>
             <CardContent className={classes["MuiCardContent-root"]}>
                 <CardHeader className={classes.header} title="🔖 Tags/Filter"/>
                 <Divider/>
                 <List>
                     <ListItem className={classes.labelContainer} disableGutters>
+                        <TextField
+                            id="tag-search" 
+                            className={classes.searchTags}
+                            placeholder="Search Tags" 
+                            variant="outlined"
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>
+                            }}
+                            size="small"
+                        />
                         {chipData.map((data, index) => {
                             let icon;
                             let color: "default" | "primary" | "secondary" = "default";

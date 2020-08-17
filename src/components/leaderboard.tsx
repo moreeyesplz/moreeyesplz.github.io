@@ -42,7 +42,7 @@ export default function UserStats() {
     const classes = useStyles();
 
     return(
-        <Card>
+        <Card elevation={0}>
             <CardContent className={classes["MuiCardContent-root"]}>
                 <CardHeader className={classes.header} title="🏆 Leaderboard"/>
                 <Divider light/>

@@ -31,11 +31,19 @@ class Issue {
     }
 
     get labels(): string[] {
-        return this.data_.labels;
+        return this.data_.labels.map((label:any) => label.name);
     }
 
     get user(): string {
-        return this.user;
+        return this.user_;
+    }
+
+    get avatar(): string {
+        return this.data_.user.avatar_url;
+    }
+
+    get user_url(): string {
+        return this.data_.user.html_url;
     }
 
     get commit_url(): string {
@@ -44,6 +52,10 @@ class Issue {
 
     get commit_message(): string {
         return this.commit_message_;
+    }
+
+    get created_at(): string {
+        return this.data_.created_at;
     }
 }
 
