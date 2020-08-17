@@ -24,9 +24,10 @@ jobs:
         npm run build
         git config --local user.email "bot@moreeyesplz.com"
         git config --local user.name "themeepbot"
-        git remote set-url origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/moreeyesplz/moreeyesplz.github.io
         git fetch origin/site
         git checkout site
-        git add build
+        mv build/* .
+        rm -rf build
+        git add .
         git commit -m'Automated build'
         git push origin site
