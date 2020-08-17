@@ -1,0 +1,32 @@
+name: deploy
+on: ['workflow_dispatch']
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        ref: master
+        persist-credentials: false
+    - name: cache dependencies
+      id: cache
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-${{ hashFiles('node_modules') }}
+    - name: install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: npm install
+    - name: build site
+      run: |
+        npm run build
+        git config --local user.email "bot@moreeyesplz.com"
+        git config --local user.name "themeepbot"
+        git remote set-url origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/moreeyesplz/moreeyesplz.github.io
+        git fetch origin/site
+        git checkout site
+        git add build
+        git commit -m'Automated build'
+        git push origin site
