@@ -1,57 +1,57 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Typography, Grid, Card, CardContent, Chip, makeStyles, Avatar, CardActionArea } from '@material-ui/core';
 // import { Popover } from '@material-ui/core';
 // import CommentIcon from '@material-ui/icons/Comment';
 // import DoneIcon from '@material-ui/icons/Done';
 
 const useStyles = makeStyles((theme) => ({
-        header: {
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            "&:hover" :{
-                color: "#3f51b5",
-            }
-          },
-        labelContainer: {
-            '& > *' : {
-                margin: theme.spacing(.5, 1, .5, 0),
-            }
-        },
-        popover: {
-            pointerEvents: 'none',
-        },
-        paper: {
-            padding: theme.spacing(1),
-        },
-        "popover-text":{
-            fontSize: "12px",
-        },
-        "card-action": {
-            display: "flex",
-        },
-        comments: {
-            transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-            '&:hover': {
-                color: "#f50057",
-            }
-        },
-        user: {
-            transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-            "&:hover": {
-                color: "#f50057",
-            }
-        },
-        avatar : {
-            border: "1px solid #bdbdbd",
-            transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-            "&:hover": {
-                border: " 1px solid #f50057"
-            }
+    header: {
+        fontSize: "1.5rem",
+        fontWeight: "bold",
+        "&:hover": {
+            color: "#3f51b5",
         }
-    })
+    },
+    labelContainer: {
+        '& > *': {
+            margin: theme.spacing(.5, 1, .5, 0),
+        }
+    },
+    popover: {
+        pointerEvents: 'none',
+    },
+    paper: {
+        padding: theme.spacing(1),
+    },
+    "popover-text": {
+        fontSize: "12px",
+    },
+    "card-action": {
+        display: "flex",
+    },
+    comments: {
+        transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        '&:hover': {
+            color: "#f50057",
+        }
+    },
+    user: {
+        transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "&:hover": {
+            color: "#f50057",
+        }
+    },
+    avatar: {
+        border: "1px solid #bdbdbd",
+        transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "&:hover": {
+            border: " 1px solid #f50057"
+        }
+    }
+})
 );
 
-const TagMapping: {[key:string] : number} = {
+const TagMapping: { [key: string]: number } = {
     "javascript": 0,
     "html": 0,
     "css": 0,
@@ -69,7 +69,7 @@ const TagMapping: {[key:string] : number} = {
     "mobile apps": 2,
     "ui design": 2,
     "graphics": 2,
-    "benchmark" : 2,
+    "benchmark": 2,
     "api": 2
 }
 
@@ -77,11 +77,11 @@ interface MeepRequestProps {
     title: string,
     url: string,
     tags: string[],
-    user: {avatar: string, name: string, url: string},
+    user: { avatar: string, name: string, url: string },
     createdAt: string
 };
 
-export default function ListCard (props: MeepRequestProps){
+export default function ListCard(props: MeepRequestProps) {
     const classes = useStyles();
     // const [anchorEl, setAnchorEl] = useState(null);
 
@@ -143,18 +143,18 @@ export default function ListCard (props: MeepRequestProps){
         }
         return (`${monthAbbr} ${day}, ${year}`);
     }
-    
-    return(
+
+    return (
         <Card>
-                <CardActionArea className={classes['card-action']} onClick={() => window.location.href=props.url}>
-                    <CardContent>
-                        <Grid spacing={8} container>
-                            <Grid item direction="column" alignItems="center" xs={1} spacing={1} container>
-                                <Grid item>
-                                    <Avatar className={classes.avatar} src={props.user.avatar} alt={props.user.name} onClick={() => window.location.href=props.user.url}/>
-                                </Grid>
-                                <Grid item>
-                                    {/* <DoneIcon 
+            <CardActionArea className={classes['card-action']} onClick={() => window.location.href = props.url}>
+                <CardContent>
+                    <Grid spacing={8} container>
+                        <Grid item direction="column" alignItems="center" xs={1} spacing={1} container>
+                            <Grid item>
+                                <Avatar className={classes.avatar} src={props.user.avatar} alt={props.user.name} onClick={() => window.location.href = props.user.url} />
+                            </Grid>
+                            <Grid item>
+                                {/* <DoneIcon 
                                         aria-owns={open ? 'mouse-over-popover' : undefined}
                                         aria-haspopup="true"
                                         color="secondary"
@@ -180,47 +180,47 @@ export default function ListCard (props: MeepRequestProps){
                                         disableRestoreFocus>
                                         <Typography className={classes['popover-text']}>Feedback already provided!</Typography>
                                     </Popover> */}
-                                </Grid>
                             </Grid>
-                            <Grid item xs={11} sm container>
-                                <Grid item direction="row" spacing={2} container>
-                                    <Grid item xs={12}>
-                                <Typography>
-                                    <span className={classes.user} onClick={() => window.location.href=props.user.url}>{props.user.name}</span> 
-                                    <span role="img" aria-label="eyes" style={{padding: "6px"}}>👀</span>
+                        </Grid>
+                        <Grid item xs={11} sm container>
+                            <Grid item direction="row" spacing={2} container>
+                                <Grid item xs={12}>
+                                    <Typography>
+                                        <span className={classes.user} onClick={() => window.location.href = props.user.url}>{props.user.name}</span>
+                                        <span role="img" aria-label="eyes" style={{ padding: "6px" }}>👀</span>
                                     meeped on {formatDate(props.createdAt)}
-                                </Typography>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Typography className={classes.header} variant="h5">
-                                            {props.title}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid className={classes.labelContainer} item xs={12}>
-                                        {props.tags.map((tag: string, index: number) => {
-                                            const tagLowerCase = tag.toLowerCase();
-                                            let color: "default" | "primary" | "secondary" = "default";
-                                            let dataMap = TagMapping[tagLowerCase];
-                
-                                            if (dataMap === 0){
-                                                color = "secondary";
-                                            } else if (dataMap === 2) {
-                                                color = "primary";
-                                            }
-                
-                                            return (
-                                                <Chip
-                                                    key={index}
-                                                    label={tag}
-                                                    color={color}
-                                                    variant="outlined"
-                                                    size="small"
-                                                    disabled
-                                                />
-                                            )
-                                        })}
-                                    </Grid>
-                                    {/* <Grid className={classes.comments} item xs={12} spacing={1} container>
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography className={classes.header} variant="h5">
+                                        {props.title}
+                                    </Typography>
+                                </Grid>
+                                <Grid className={classes.labelContainer} item xs={12}>
+                                    {props.tags.map((tag: string, index: number) => {
+                                        const tagLowerCase = tag.toLowerCase();
+                                        let color: "default" | "primary" | "secondary" = "default";
+                                        let dataMap = TagMapping[tagLowerCase];
+
+                                        if (dataMap === 0) {
+                                            color = "secondary";
+                                        } else if (dataMap === 2) {
+                                            color = "primary";
+                                        }
+
+                                        return (
+                                            <Chip
+                                                key={index}
+                                                label={tag}
+                                                color={color}
+                                                variant="outlined"
+                                                size="small"
+                                                disabled
+                                            />
+                                        )
+                                    })}
+                                </Grid>
+                                {/* <Grid className={classes.comments} item xs={12} spacing={1} container>
                                         <Grid item>
                                             <CommentIcon />
                                         </Grid>
@@ -228,11 +228,11 @@ export default function ListCard (props: MeepRequestProps){
                                             <Typography>15 comments</Typography>
                                         </Grid>
                                     </Grid> */}
-                                </Grid>
                             </Grid>
                         </Grid>
-                    </CardContent>
-                </CardActionArea>            
+                    </Grid>
+                </CardContent>
+            </CardActionArea>
         </Card>
     )
 }

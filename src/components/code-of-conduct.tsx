@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Paper, List, ListItem, Button, makeStyles } from '@material-ui/core';
+import { Typography, Paper, List, ListItem, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     header: {

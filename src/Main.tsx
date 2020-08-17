@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'; import { Container, Grid, makeStyles } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Container, Grid, makeStyles } from '@material-ui/core';
 import NavBar from './components/nav-bar';
 import Logo from './components/Logo/logo';
 import ListCard from './components/list-card';
@@ -23,7 +24,7 @@ const issues = new Issues();
 
 function App() {
   const classes = useStyles();
-  const [labels, setLabels] = useState<string[]>([]);
+  const [labels] = useState<string[]>([]);
   const [issueIds, setIssueIds] = useState<number[]>([]);
 
   useEffect(() => {
@@ -39,12 +40,12 @@ function App() {
   for (let i = 0; i !== issueIds.length; ++i) {
     const issue = issues.get(issueIds[i]);
     console.log(issue);
-    if(!issue) {
+    if (!issue) {
       continue;
     }
     cards.push(
       <Grid item key={i}>
-        <ListCard 
+        <ListCard
           title={issue?.commit_message}
           url={issue.commit_url}
           tags={issue.labels}
@@ -80,7 +81,7 @@ function App() {
 
           <Grid item xs={9} spacing={2} direction="column" wrap="nowrap" container>
             <Grid item xs={12}>
-                <WelcomeCard /> 
+              <WelcomeCard />
             </Grid>
 
             <Grid item xs={12} justify="space-between" spacing={0} container>
