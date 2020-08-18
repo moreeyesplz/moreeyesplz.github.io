@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 export default function WelcomeCard (){
     const classes = useStyles();
     const [displayCard, setDisplayCard] = useState("block");
-    const isTablet = useMediaQuery('(max-width:960px');
+    const isTablet = useMediaQuery('(max-width:960px)');
 
     const closeCard = () => {
         setDisplayCard("none");

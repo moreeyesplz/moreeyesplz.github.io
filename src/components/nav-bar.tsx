@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NavBar (props: {isUserActive: boolean, username?:string, avatarURL?:string, userURL?:string}){
     const classes = useStyles();
-    const isTablet = useMediaQuery('(max-width:960px');
+    const isTablet = useMediaQuery('(max-width:960px)');
     const isPhone = useMediaQuery('(max-width:600px)');
     const [anchorMenu, setAnchorMenu] = useState(null);
     const [anchorIcon, setAnchorIcon] = useState(null);

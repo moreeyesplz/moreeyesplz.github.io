@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Main(props: {octokit: Octokit}) {
   const classes = useStyles();
-  const isTablet = useMediaQuery('(max-width:960px');
+  const isTablet = useMediaQuery('(max-width:960px)');
   const isPhone = useMediaQuery('(max-width:600px)');
   const [labels, setLabels] = useState<string[]>([]);
   const [issueIds, setIssueIds] = useState<number[]>([]);

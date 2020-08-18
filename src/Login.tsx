@@ -117,8 +117,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-  const isTablet = useMediaQuery('(max-width:960px');
-  const isPhone = useMediaQuery('(max-width:600px');
+  const isTablet = useMediaQuery('(max-width:960px)');
+  const isPhone = useMediaQuery('(max-width:600px)');
 
   const showHorizontalImg = isPhone ? null : <img className={classes.image} src={MeeperImg} alt="More Eyes, Plz! eyes"></img>
   const showNavBar = isPhone ? null : <NavBar isUserActive={false} />
