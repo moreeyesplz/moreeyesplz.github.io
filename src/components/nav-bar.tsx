@@ -13,9 +13,9 @@ const useStyles = makeStyles((theme) => ({
     "icon-hover": {
         transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
         borderRadius: "50%",
-        "&:hover" : {
+        "&:hover": {
             backgroundColor: "#f5f5f5",
-            "& > *" : {
+            "& > *": {
                 color: "#3f51b5"
             }
         }
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     menu: {
         marginTop: "70px",
     },
-    "menu-item":{
+    "menu-item": {
         minWidth: "200px",
         transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
         "&:hover": {
@@ -35,10 +35,10 @@ const useStyles = makeStyles((theme) => ({
         flexFlow: "column nowrap",
         alignItems: "flex-start"
     },
-    signUpButton:{
+    signUpButton: {
         margin: theme.spacing(0, .5),
     },
-    loginButton:{
+    loginButton: {
         margin: theme.spacing(0, .5),
         color: "white",
         borderColor: "white"
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function NavBar (props: {isUserActive: boolean, username?:string, avatarURL?:string, userURL?:string}){
+export default function NavBar(props: { isUserActive: boolean, username?: string, avatarURL?: string, userURL?: string }) {
     const classes = useStyles();
     const isTablet = useMediaQuery('(max-width:960px)');
     const isPhone = useMediaQuery('(max-width:600px)');
@@ -60,10 +60,10 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
     const [anchorTwitterIcon, setAnchorTwitterIcon] = useState(null);
 
     const loginNavTablet = isPhone ?
-    null : isTablet ? 
-    <Button color="inherit" href="https://github.com/marketplace/actions/meep-scanner"><GitHubIcon style={{marginLeft:"8px"}}/> </Button>
-    :
-    <Button variant="outlined" color="inherit" href="https://github.com/marketplace/actions/meep-scanner">GitHub MarketPlace <GitHubIcon style={{marginLeft:"8px"}}/> </Button>
+        null : isTablet ?
+            <Button color="inherit" href="https://github.com/marketplace/actions/meep-scanner"><GitHubIcon style={{ marginLeft: "8px" }} /> </Button>
+            :
+            <Button variant="outlined" color="inherit" href="https://github.com/marketplace/actions/meep-scanner">GitHub MarketPlace <GitHubIcon style={{ marginLeft: "8px" }} /> </Button>
 
     const handleClick = (event: any) => {
         setAnchorMenu(event.currentTarget);
@@ -73,7 +73,7 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
         setAnchorMenu(null);
     };
 
-    const handlePopoverOpen = (event : any) => {
+    const handlePopoverOpen = (event: any) => {
         setAnchorIcon(event.currentTarget);
     };
 
@@ -81,7 +81,7 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
         setAnchorIcon(null);
     };
 
-    const handleTwitterPopoverOpen = (event : any) => {
+    const handleTwitterPopoverOpen = (event: any) => {
         setAnchorTwitterIcon(event.currentTarget);
     };
 
@@ -108,12 +108,12 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
             color="secondary"
             onMouseEnter={handleTwitterPopoverOpen}
             onMouseLeave={handleTwitterPopoverClose}
-            // onClick={() => window.location.href="https://github.com/marketplace/actions/meep-scanner"}
-            >
+            onClick={() => window.location.href = "https://twitter.com/moreeyesplz"}
+        >
             <TwitterIcon className="nav-icon" />
             <Popover
                 className={classes.popover}
-                classes={{paper: classes.paper}}
+                classes={{ paper: classes.paper }}
                 open={openTwitter}
                 anchorEl={anchorTwitterIcon}
                 anchorOrigin={{
@@ -136,12 +136,12 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
             color="secondary"
             onMouseEnter={handlePopoverOpen}
             onMouseLeave={handlePopoverClose}
-            onClick={() => window.location.href="https://github.com/marketplace/actions/meep-scanner"}
-            >
+            onClick={() => window.location.href = "https://github.com/marketplace/actions/meep-scanner"}
+        >
             <GitHubIcon className="nav-icon" />
             <Popover
                 className={classes.popover}
-                classes={{paper: classes.paper}}
+                classes={{ paper: classes.paper }}
                 open={open}
                 anchorEl={anchorIcon}
                 anchorOrigin={{
@@ -157,18 +157,18 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                 <Typography variant="caption">GitHub Actions Marketplace</Typography>
             </Popover>
         </Grid>
-    
-    const displayTwitterMenu = isPhone ? <MenuItem className={classes["menu-item"]} onClick={() => window.location.href=`${props.userURL}`}>Follow us on Twitter</MenuItem>
-    : null
 
-    const displayGitHubMenu = isPhone ? <MenuItem className={classes["menu-item"]} onClick={() => window.location.href=`${props.userURL}`}>MEEP GitHub Marketplace </MenuItem>
-    : null
+    const displayTwitterMenu = isPhone ? <MenuItem className={classes["menu-item"]} onClick={() => window.location.href = `${props.userURL}`}>Follow us on Twitter</MenuItem>
+        : null
+
+    const displayGitHubMenu = isPhone ? <MenuItem className={classes["menu-item"]} onClick={() => window.location.href = `${props.userURL}`}>MEEP GitHub Marketplace </MenuItem>
+        : null
 
     const changeLogo = isPhone ? <Eyes /> : <Icon />
 
-    const displayNavBar = props.isUserActive ? 
+    const displayNavBar = props.isUserActive ?
         <Grid container alignItems="center" spacing={0}>
-            <Grid item xs={3} onClick={() => window.scrollTo({top: 0, left: 0, behavior: "smooth"})}>
+            <Grid item xs={3} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}>
                 {changeLogo}
             </Grid>
             <Grid item xs={6}>
@@ -185,7 +185,7 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                     }}
                     onKeyUp={searchChips}
                 /> */}
-            </Grid>                    
+            </Grid>
             <Grid item xs={3} container alignItems="center" justify="flex-end" wrap="nowrap" spacing={3}>
                 {displayGitHubIcon}
                 {displayTwitterIcon}
@@ -195,7 +195,7 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                     </Badge>
                 </Grid> */}
                 <Grid item>
-                    <Avatar src={props.avatarURL} alt={props.username} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}/>
+                    <Avatar src={props.avatarURL} alt={props.username} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} />
                     <Menu
                         className={classes.menu}
                         anchorEl={anchorMenu}
@@ -211,16 +211,16 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                             horizontal: 'right',
                         }}
                     >
-                        <MenuItem className={classes["MuiMenuItem-root"]} onClick={() => window.location.href=`${props.userURL}`}>
+                        <MenuItem className={classes["MuiMenuItem-root"]} onClick={() => window.location.href = `${props.userURL}`}>
                             <Typography variant="button">Logged in as</Typography>
                             <Typography variant="h6">{props.username}<span role="img" aria-label="crown emoji">👑</span></Typography>
                             {/* <Typography>100 pts</Typography> */}
                         </MenuItem>
-                        <Divider/>
+                        <Divider />
                         {/* <MenuItem className={classes["menu-item"]} onClick={handleClose}>Messages</MenuItem>
                         <MenuItem className={classes["menu-item"]} onClick={handleClose}>My Posts</MenuItem>
                         <MenuItem className={classes["menu-item"]} onClick={handleClose}>Settings</MenuItem> */}
-                        <MenuItem className={classes["menu-item"]} onClick={() => window.location.href=`${props.userURL}`}>My GitHub Profile</MenuItem>
+                        <MenuItem className={classes["menu-item"]} onClick={() => window.location.href = `${props.userURL}`}>My GitHub Profile</MenuItem>
                         {displayGitHubMenu}
                         {displayTwitterMenu}
                         <MenuItem className={classes["menu-item"]} onClick={handleLogout}>LOGOUT</MenuItem>
@@ -230,7 +230,7 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
         </Grid>
         :
         <Grid container alignItems="center">
-            <Grid item xs={3} onClick={() => window.scrollTo({top: 0, left: 0, behavior: "smooth"})}>
+            <Grid item xs={3} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}>
                 <Icon />
             </Grid>
             <Grid item xs={9} container alignItems="center" justify="flex-end" spacing={3}>
@@ -242,13 +242,13 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                 </Grid>
             </Grid>
         </Grid>
-        
+
 
 
     return (
         <AppBar>
             <Toolbar>
-                {displayNavBar}            
+                {displayNavBar}
             </Toolbar>
         </AppBar>
     )
