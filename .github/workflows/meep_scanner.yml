@@ -1,0 +1,8 @@
+name: meep_scanner
+on: [push]
+
+jobs:
+  meep_scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: moreeyesplz/meep_scanner@master
