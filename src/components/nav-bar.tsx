@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Avatar, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover } from '@material-ui/core';
+import { AppBar, Toolbar, Avatar, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover, useMediaQuery } from '@material-ui/core';
 // import {TextField, InputAdornment } from '@material-ui/core';
 // import { Badge } from '@material-ui/core';
 // import SearchIcon from '@material-ui/icons/Search';
 // import NotificationsIcon from '@material-ui/icons/Notifications';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import TwitterIcon from '@material-ui/icons/Twitter';
 import Icon from './Logo/icon';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,8 +52,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NavBar (props: {isUserActive: boolean, username?:string, avatarURL?:string, userURL?:string}){
     const classes = useStyles();
+    const isTablet = useMediaQuery('(max-width:1000px');
+    const isPhone = useMediaQuery('(max-width:600)');
     const [anchorMenu, setAnchorMenu] = useState(null);
     const [anchorIcon, setAnchorIcon] = useState(null);
+    const [anchorTwitterIcon, setAnchorTwitterIcon] = useState(null);
+
+    const loginNavTablet = isTablet ? 
+    <Button color="inherit" href="https://github.com/marketplace/actions/meep-scanner"><GitHubIcon style={{marginLeft:"8px"}}/> </Button>
+    :
+    <Button variant="outlined" color="inherit" href="https://github.com/marketplace/actions/meep-scanner">GitHub MarketPlace <GitHubIcon style={{marginLeft:"8px"}}/> </Button>
 
     const handleClick = (event: any) => {
         setAnchorMenu(event.currentTarget);
@@ -70,7 +79,16 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
         setAnchorIcon(null);
     };
 
+    const handleTwitterPopoverOpen = (event : any) => {
+        setAnchorTwitterIcon(event.currentTarget);
+    };
+
+    const handleTwitterPopoverClose = () => {
+        setAnchorTwitterIcon(null);
+    };
+
     const open = Boolean(anchorIcon);
+    const openTwitter = Boolean(anchorTwitterIcon);
 
     const handleLogout = () => {
         localStorage.clear();
@@ -124,6 +142,33 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                         <Typography variant="caption">GitHub Actions Marketplace</Typography>
                     </Popover>
                 </Grid>
+                <Grid item className={classes["icon-hover"]}
+                    aria-owns={openTwitter ? 'mouse-over-popover' : undefined}
+                    aria-haspopup="true"
+                    color="secondary"
+                    onMouseEnter={handleTwitterPopoverOpen}
+                    onMouseLeave={handleTwitterPopoverClose}
+                    onClick={() => window.location.href="https://github.com/marketplace/actions/meep-scanner"}
+                    >
+                    <TwitterIcon className="nav-icon" />
+                    <Popover
+                        className={classes.popover}
+                        classes={{paper: classes.paper}}
+                        open={openTwitter}
+                        anchorEl={anchorTwitterIcon}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                        onClose={handleTwitterPopoverClose}
+                        disableRestoreFocus>
+                        <Typography variant="caption">Follow Us Twitter!</Typography>
+                    </Popover>
+                </Grid>
                 {/* <Grid item className={classes["icon-hover"]}>
                     <Badge color="secondary" variant="dot" invisible={false}>
                         <NotificationsIcon className="nav-icon" />
@@ -155,8 +200,7 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                         {/* <MenuItem className={classes["menu-item"]} onClick={handleClose}>Messages</MenuItem>
                         <MenuItem className={classes["menu-item"]} onClick={handleClose}>My Posts</MenuItem>
                         <MenuItem className={classes["menu-item"]} onClick={handleClose}>Settings</MenuItem> */}
-                        <MenuItem className={classes["menu-item"]} onClick={() => window.location.href="https://github.com/marketplace/actions/meep-scanner"}>Go To GitHub Marketplace</MenuItem>
-                        <MenuItem className={classes["menu-item"]} onClick={() => window.location.href="https://twitter.com/moreeyesplz"}>Follow us on Twitter</MenuItem>
+                        <MenuItem className={classes["menu-item"]} onClick={() => window.location.href=`${props.userURL}`}>My GitHub Profile</MenuItem>
                         <MenuItem className={classes["menu-item"]} onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                 </Grid>
@@ -169,7 +213,7 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
             </Grid>
             <Grid item xs={9} container alignItems="center" justify="flex-end" spacing={3}>
                 <Grid item>
-                    <Button variant="outlined" color="inherit" href="https://github.com/marketplace/actions/meep-scanner">GitHub MarketPlace <GitHubIcon style={{marginLeft:"8px"}}/> </Button>
+                    {loginNavTablet}
                 </Grid>
                 <Grid item>
                     <Button variant="contained" color="secondary" href="https://github.com/login/oauth/authorize?client_id=ac67cef96ff2922c4a3c">Login</Button>

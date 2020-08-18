@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Paper, Card, CardContent, Typography, Link, makeStyles } from '@material-ui/core';
+import { Button, Paper, Card, CardContent, Typography, Link, makeStyles, useMediaQuery } from '@material-ui/core';
 import NavBar from './components/nav-bar';
 import Footer from './components/footer';
 import Logo from './components/Logo/login-logo';
@@ -15,18 +15,28 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: 'column nowrap',
     alignItems: 'center',
     justifyContent: "space-evenly",
-    height: "1200px"
+    height: "1200px",
   },
   headerText:{
-    fontSize: "2.5rem",
     fontWeight: "bold",
-    textAlign: "left"
+    textAlign: "left",
+    fontSize: "2.5rem",
+    [theme.breakpoints.down('md')]:{
+      fontSize: "2rem",
+      textAlign: "center"
+    }
   },
   bodyText: {
     lineHeight: "2.5rem",
     fontSize: "1.4rem",
     paddingTop: "28px",
-    fontWeight: 100
+    fontWeight: 100,
+    [theme.breakpoints.down('md')]:{
+      fontSize: "1.25rem",
+    },
+    [theme.breakpoints.down('sm')]:{
+      fontSize: "1rem",
+    }
   },
   container: {
     display: "flex",
@@ -42,18 +52,32 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     padding: "100px",
     maxWidth: "1280px",
+    [theme.breakpoints.down('sm')]:{
+      flexFlow: "column-reverse nowrap",
+    }
   },
   cardText: {
     display: 'flex',
     flexFlow: 'column',
     width: "35%",
+    [theme.breakpoints.down('sm')]:{
+      width: "100%"
+    }
   },
   image:{
-    width: "60%"
+    width: "60%",
+    [theme.breakpoints.down('sm')]:{
+      width: "100%",
+      padding: "20px"
+    }
   },
   button: {
     padding: theme.spacing(3),
     fontSize: "1.25em",
+    [theme.breakpoints.down('sm')]:{
+      padding: theme.spacing(2),
+      fontSize: "1em",
+    }
   },
   buttonIcon: {
     paddingLeft: "10px",
@@ -78,13 +102,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  const isTablet = useMediaQuery('(max-width:1000px');
 
   return (
     <div>
       <NavBar isUserActive={false} />
       <Paper className={classes.mainCard} elevation={0}>
         <Logo />
-        <Button variant="contained" color="primary" className={classes.button} href="https://github.com/login/oauth/authorize?client_id=ac67cef96ff2922c4a3c">Sign Up with GitHub <GitHubIcon className={classes.buttonIcon} fontSize="large" /></Button>
+        <Button variant="contained" color="primary" className={classes.button} href="https://github.com/login/oauth/authorize?client_id=ac67cef96ff2922c4a3c">Sign In with GitHub <GitHubIcon className={classes.buttonIcon} fontSize="large" /></Button>
       </Paper>
 
       <div className={classes.container}>
