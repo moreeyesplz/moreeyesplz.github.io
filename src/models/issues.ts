@@ -1,4 +1,4 @@
-import octokit from './octokit';
+import { Octokit } from '@octokit/rest';
 
 const MEEPS_REPO = {
     owner: 'moreeyesplz',
@@ -61,14 +61,20 @@ class Issue {
 
 export default class Issues {
     issues: { [id: number]: Issue } = {};
+    octokit: Octokit;
+    constructor(octokit: Octokit){
+        this.octokit = octokit;
+    }
 
     async fetch(labels: string[] = []) {
-        const { data } = await octokit.issues.listForRepo({
+        const listForRepo = this.octokit.issues.listForRepo as any;
+        const { data } = await listForRepo({
             ...MEEPS_REPO,
             state: 'open',
             labels,
             sort: 'created',
             direction: 'desc',
+            creator: 'themeepbot[bot]',
         });
         const ids: number[] = [];
         for (let i = 0; i !== data.length; ++i) {

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Main from "./Main";
 import Login from "./Login";
+import { Octokit } from '@octokit/rest';
 
-function App() {
-  const [isUserOnline] = useState(false);
+function App(props: {octokit: Octokit | null}) {
 
-  const displayPage = isUserOnline ? <Main /> : <Login />;
+  const displayPage = props.octokit ? <Main octokit={props.octokit} /> : <Login />;
 
   return (
     <div>

@@ -51,11 +51,11 @@ export default function Footer(props: {isUserActive: boolean}) {
             <UpIcon />
         </Fab>
         <div className={classes.iconContainer}>
-            <IconButton color="primary" aria-label="GitHub Marketplace" component="span">
-                <GitHubIcon href="https://github.com/marketplace/actions/meep-scanner" />
+            <IconButton color="primary" aria-label="GitHub Marketplace" component="span" onClick={() => window.location.href="https://github.com/marketplace/actions/meep-scanner"}>
+                <GitHubIcon />
             </IconButton>
-            <IconButton color="primary" aria-label="Twitter Profile" component="span">
-                <TwitterIcon href="https://twitter.com"/>
+            <IconButton color="primary" aria-label="Twitter Profile" component="span" onClick={() => window.location.href="https://twitter.com/moreeyesplz"}>
+                <TwitterIcon />
             </IconButton>
         </div>
         <Typography> <span className={classes.gitLinks} onClick={() => window.location.href="https://github.com/jeremyong"}>jeremyong</span> | <span className={classes.gitLinks} onClick={() => window.location.href="https://github.com/duchess-toffee"}>duchess-toffee</span> </Typography>
@@ -71,11 +71,11 @@ export default function Footer(props: {isUserActive: boolean}) {
         </Fab>
         <Button variant="outlined" color="secondary" className={classes.button} href="https://github.com/login/oauth/authorize?client_id=ac67cef96ff2922c4a3c">Join with GitHub <GitHubIcon className={classes.buttonIcon} fontSize="large" /></Button>
         <div className={classes.iconContainer}>
-            <IconButton color="primary" aria-label="GitHub Marketplace" component="span">
-                <GitHubIcon href="https://github.com/marketplace/actions/meep-scanner"/>
+            <IconButton color="primary" aria-label="GitHub Marketplace" component="span" onClick={() => window.location.href="https://github.com/marketplace/actions/meep-scanner"}>
+                <GitHubIcon />
             </IconButton>
-            <IconButton color="primary" aria-label="Twitter Profile" component="span">
-                <TwitterIcon href="https://twitter.com"/>
+            <IconButton color="primary" aria-label="Twitter Profile" component="span" onClick={() => window.location.href="https://twitter.com/moreeyesplz"}>
+                <TwitterIcon />
             </IconButton>
         </div>
         <Typography> <span className={classes.gitLinks} onClick={() => window.location.href="https://github.com/jeremyong"}>jeremyong</span> | <span className={classes.gitLinks} onClick={() => window.location.href="https://github.com/duchess-toffee"}>duchess-toffee</span> </Typography>

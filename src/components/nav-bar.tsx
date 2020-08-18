@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, TextField, InputAdornment, Avatar, Badge, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import { AppBar, Toolbar, Avatar, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover } from '@material-ui/core';
+// import {TextField, InputAdornment } from '@material-ui/core';
+// import { Badge } from '@material-ui/core';
+// import SearchIcon from '@material-ui/icons/Search';
+// import NotificationsIcon from '@material-ui/icons/Notifications';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Icon from './Logo/icon';
 
@@ -47,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function NavBar (props: {isUserActive: boolean}){
+export default function NavBar (props: {isUserActive: boolean, username?:string, avatarURL?:string, userURL?:string}){
     const classes = useStyles();
     const [anchorMenu, setAnchorMenu] = useState(null);
     const [anchorIcon, setAnchorIcon] = useState(null);
@@ -70,13 +72,18 @@ export default function NavBar (props: {isUserActive: boolean}){
 
     const open = Boolean(anchorIcon);
 
+    const handleLogout = () => {
+        localStorage.clear();
+        window.location.reload();
+    };
+
     const displayNavBar = props.isUserActive ? 
         <Grid container alignItems="center" spacing={0}>
-            <Grid item xs={3} onClick={() => window.location.href="https:www.moreeyesplz.com"}>
+            <Grid item xs={3} onClick={() => window.scrollTo({top: 0, left: 0, behavior: "smooth"})}>
                 <Icon />
             </Grid>
             <Grid item xs={6}>
-                <TextField 
+                {/* <TextField 
                     fullWidth
                     placeholder="Search..."
                     variant="outlined"
@@ -87,7 +94,7 @@ export default function NavBar (props: {isUserActive: boolean}){
                             </InputAdornment>
                         )
                     }}
-                />
+                /> */}
             </Grid>                    
             <Grid item xs={3} container alignItems="center" justify="flex-end" spacing={3}>
                 <Grid item className={classes["icon-hover"]}
@@ -117,13 +124,13 @@ export default function NavBar (props: {isUserActive: boolean}){
                         <Typography variant="caption">GitHub Actions Marketplace</Typography>
                     </Popover>
                 </Grid>
-                <Grid item className={classes["icon-hover"]}>
+                {/* <Grid item className={classes["icon-hover"]}>
                     <Badge color="secondary" variant="dot" invisible={false}>
                         <NotificationsIcon className="nav-icon" />
                     </Badge>
-                </Grid>
+                </Grid> */}
                 <Grid item>
-                    <Avatar alt="username" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}/>
+                    <Avatar src={props.avatarURL} alt={props.username} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}/>
                     <Menu
                         className={classes.menu}
                         anchorEl={anchorMenu}
@@ -139,22 +146,25 @@ export default function NavBar (props: {isUserActive: boolean}){
                             horizontal: 'right',
                         }}
                     >
-                        <MenuItem className={classes["MuiMenuItem-root"]} onClick={handleClose}>
-                            <Typography variant="h6" >Duchess-Toffee</Typography>
-                            <Typography>100 pts</Typography>
+                        <MenuItem className={classes["MuiMenuItem-root"]} onClick={() => window.location.href=`${props.userURL}`}>
+                            <Typography variant="button">Logged in as</Typography>
+                            <Typography variant="h6">{props.username}<span role="img" aria-label="crown emoji">👑</span></Typography>
+                            {/* <Typography>100 pts</Typography> */}
                         </MenuItem>
                         <Divider/>
-                        <MenuItem className={classes["menu-item"]} onClick={handleClose}>Messages</MenuItem>
+                        {/* <MenuItem className={classes["menu-item"]} onClick={handleClose}>Messages</MenuItem>
                         <MenuItem className={classes["menu-item"]} onClick={handleClose}>My Posts</MenuItem>
-                        <MenuItem className={classes["menu-item"]} onClick={handleClose}>Settings</MenuItem>
-                        <MenuItem className={classes["menu-item"]} onClick={handleClose}>Logout</MenuItem>
+                        <MenuItem className={classes["menu-item"]} onClick={handleClose}>Settings</MenuItem> */}
+                        <MenuItem className={classes["menu-item"]} onClick={() => window.location.href="https://github.com/marketplace/actions/meep-scanner"}>Go To GitHub Marketplace</MenuItem>
+                        <MenuItem className={classes["menu-item"]} onClick={() => window.location.href="https://twitter.com/moreeyesplz"}>Follow us on Twitter</MenuItem>
+                        <MenuItem className={classes["menu-item"]} onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                 </Grid>
             </Grid>
         </Grid>
         :
         <Grid container alignItems="center">
-            <Grid item xs={3} onClick={() => window.location.href="http://localhost:3002/"}>
+            <Grid item xs={3} onClick={() => window.scrollTo({top: 0, left: 0, behavior: "smooth"})}>
                 <Icon />
             </Grid>
             <Grid item xs={9} container alignItems="center" justify="flex-end" spacing={3}>
