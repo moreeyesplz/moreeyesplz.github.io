@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Avatar, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover, useMediaQuery } from '@material-ui/core';
-import {TextField, InputAdornment } from '@material-ui/core';
+// import {TextField, InputAdornment } from '@material-ui/core';
 // import { Badge } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+// import SearchIcon from '@material-ui/icons/Search';
 // import NotificationsIcon from '@material-ui/icons/Notifications';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -89,9 +89,9 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
         setAnchorTwitterIcon(null);
     };
 
-    const searchChips = (e:any) => {
-        console.log(e.target.value)
-    }
+    // const searchChips = (e:any) => {
+    //     console.log(e.target.value)
+    // }
 
     const open = Boolean(anchorIcon);
     const openTwitter = Boolean(anchorTwitterIcon);
