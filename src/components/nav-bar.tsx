@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Avatar, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover, useMediaQuery } from '@material-ui/core';
-// import {TextField, InputAdornment } from '@material-ui/core';
+import {TextField, InputAdornment } from '@material-ui/core';
 // import { Badge } from '@material-ui/core';
-// import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@material-ui/icons/Search';
 // import NotificationsIcon from '@material-ui/icons/Notifications';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -89,6 +89,10 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
         setAnchorTwitterIcon(null);
     };
 
+    const searchChips = (e:any) => {
+        console.log(e.target.value)
+    }
+
     const open = Boolean(anchorIcon);
     const openTwitter = Boolean(anchorTwitterIcon);
 
@@ -168,7 +172,7 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                 {changeLogo}
             </Grid>
             <Grid item xs={6}>
-                {/* <TextField 
+                <TextField 
                     fullWidth
                     placeholder="Search..."
                     variant="outlined"
@@ -179,7 +183,8 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                             </InputAdornment>
                         )
                     }}
-                /> */}
+                    onKeyUp={searchChips}
+                />
             </Grid>                    
             <Grid item xs={3} container alignItems="center" justify="flex-end" wrap="nowrap" spacing={3}>
                 {displayGitHubIcon}
