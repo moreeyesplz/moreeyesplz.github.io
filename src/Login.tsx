@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Paper, Card, CardContent, Typography, Link, makeStyles, useMediaQuery } from '@material-ui/core';
+import { Button, Paper, Card, CardContent, Typography, Link, makeStyles } from '@material-ui/core';
 import NavBar from './components/nav-bar';
 import Footer from './components/footer';
 import Logo from './components/Logo/login-logo';
@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-  const isTablet = useMediaQuery('(max-width:1000px');
+  // const isTablet = useMediaQuery('(max-width:1000px');
 
   return (
     <div>
