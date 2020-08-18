@@ -1,8 +1,10 @@
-import React from 'react';
-import { Typography, Grid, Card, CardContent, Chip, makeStyles, Avatar, CardActionArea } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Typography, Grid, Card, CardContent, Chip, makeStyles, Avatar, CardActionArea, Collapse, IconButton } from '@material-ui/core';
 // import { Popover } from '@material-ui/core';
 // import CommentIcon from '@material-ui/icons/Comment';
 // import DoneIcon from '@material-ui/icons/Done';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -47,6 +49,21 @@ const useStyles = makeStyles((theme) => ({
         "&:hover": {
             border: " 1px solid #f50057"
         }
+    },
+    expand: {
+        marginTop: "-50px",
+        float: "right",
+        transform: 'rotate(0deg)',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+    },
+    expandOpen: {
+        float: "right",
+        transform: 'rotate(180deg)',
+    },
+    details: {
+        margin: theme.spacing(0,2)
     }
 })
 );
@@ -83,8 +100,12 @@ interface MeepRequestProps {
 
 export default function ListCard(props: MeepRequestProps) {
     const classes = useStyles();
+    const [expanded, setExpanded] = useState(false)
     // const [anchorEl, setAnchorEl] = useState(null);
 
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
     // const handlePopoverOpen = (event : any) => {
     //     setAnchorEl(event.currentTarget);
     // };
@@ -144,12 +165,24 @@ export default function ListCard(props: MeepRequestProps) {
         return (`${monthAbbr} ${day}, ${year}`);
     }
 
+    const extractTitle = (message: string) => {
+        const title = message.split(/(\n)/)
+        return title[0];
+    }
+
+    const extractDetails = (message: string) => {
+        const title = message.split(/(\n)/)
+        const details = title.slice(1).join("")
+        return details;
+    }
+
+
     return (
         <Card>
             <CardActionArea className={classes['card-action']} onClick={() => window.location.href = props.url}>
                 <CardContent>
-                    <Grid spacing={8} container>
-                        <Grid item direction="column" alignItems="center" xs={1} spacing={1} container>
+                    <Grid spacing={8} container wrap="nowrap" >
+                        <Grid item direction="column"alignItems="flex-start" xs={1} spacing={1} container>
                             <Grid item>
                                 <Avatar className={classes.avatar} src={props.user.avatar} alt={props.user.name} onClick={() => window.location.href = props.user.url} />
                             </Grid>
@@ -193,7 +226,7 @@ export default function ListCard(props: MeepRequestProps) {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Typography className={classes.header} variant="h5">
-                                        {props.title}
+                                        {extractTitle(props.title)}
                                     </Typography>
                                 </Grid>
                                 <Grid className={classes.labelContainer} item xs={12}>
@@ -233,6 +266,21 @@ export default function ListCard(props: MeepRequestProps) {
                     </Grid>
                 </CardContent>
             </CardActionArea>
+            <IconButton
+                className={clsx(classes.expand, {
+                    [classes.expandOpen]: expanded,
+                })}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+                color="primary">
+                <ExpandMoreIcon />
+            </IconButton>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <CardContent className={classes.details}>
+                    <Typography>{extractDetails(props.title)}</Typography>
+                </CardContent>
+            </Collapse>
         </Card>
     )
 }

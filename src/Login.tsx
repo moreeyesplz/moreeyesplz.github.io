@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Paper, Card, CardContent, Typography, Link, makeStyles } from '@material-ui/core';
+import { Button, Paper, Card, CardContent, Typography, Link, makeStyles, useMediaQuery } from '@material-ui/core';
 import NavBar from './components/nav-bar';
 import Footer from './components/footer';
 import Logo from './components/Logo/login-logo';
@@ -16,6 +16,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: "space-evenly",
     height: "1200px",
+    [theme.breakpoints.down('sm')]:{
+      height: "900px",
+      justifyContent: "space-around"
+    },
+    [theme.breakpoints.down('xs')]:{
+      marginTop: "0px",
+      height: "600px",
+      justifyContent: "space-around"
+    }
   },
   headerText:{
     fontWeight: "bold",
@@ -54,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "1280px",
     [theme.breakpoints.down('sm')]:{
       flexFlow: "column-reverse nowrap",
+    },
+    [theme.breakpoints.down('xs')]:{
+      padding: "30px"
     }
   },
   cardText: {
@@ -69,6 +81,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]:{
       width: "100%",
       padding: "20px"
+    },
+    [theme.breakpoints.down('xs')]:{
+      width: "100%"
     }
   },
   button: {
@@ -102,13 +117,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-  // const isTablet = useMediaQuery('(max-width:1000px');
+  const isTablet = useMediaQuery('(max-width:960px');
+  const isPhone = useMediaQuery('(max-width:600px');
+
+  const showHorizontalImg = isPhone ? null : <img className={classes.image} src={MeeperImg} alt="More Eyes, Plz! eyes"></img>
+  const showNavBar = isPhone ? null : <NavBar isUserActive={false} />
 
   return (
     <div>
-      <NavBar isUserActive={false} />
+      {showNavBar}
       <Paper className={classes.mainCard} elevation={0}>
-        <Logo />
+        <Logo meepFontSize={isPhone ? "7rem" : isTablet ? "15rem" : "20rem"} textFontSize={isPhone ? "2rem" : isTablet ? "4.5rem" : "6.5rem"}/>
         <Button variant="contained" color="primary" className={classes.button} href="https://github.com/login/oauth/authorize?client_id=ac67cef96ff2922c4a3c">Sign In with GitHub <GitHubIcon className={classes.buttonIcon} fontSize="large" /></Button>
       </Paper>
 
@@ -129,7 +148,7 @@ export default function Login() {
         </Card>
 
         <Card className={classes.cardContainer} elevation={0}>
-          <img className={classes.image} src={MeeperImg} alt="More Eyes, Plz! eyes"></img>
+          {showHorizontalImg}
           <CardContent className={classes.cardText}>
             <Typography className={classes.headerText}>
               Get Started

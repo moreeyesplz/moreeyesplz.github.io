@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Container, Grid, makeStyles, Typography, useMediaQuery } from '@material-ui/core';
 import NavBar from './components/nav-bar';
 import Logo from './components/Logo/logo';
 import ListCard from './components/list-card';
@@ -37,6 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Main(props: {octokit: Octokit}) {
   const classes = useStyles();
+  const isTablet = useMediaQuery('(max-width:960px');
+  const isPhone = useMediaQuery('(max-width:600px)');
   const [labels, setLabels] = useState<string[]>([]);
   const [issueIds, setIssueIds] = useState<number[]>([]);
   const [username, setUsername] = useState("Anonymous");
@@ -98,48 +100,68 @@ export default function Main(props: {octokit: Octokit}) {
       <Typography variant="h4">No Results Found</Typography>
     </div> 
     : cards
+  
+  const displayLeftColumn = isTablet ?
+    null
+    :
+    <Grid item direction="column" xs={3} spacing={2} container>
+      <Grid item>
+        <div className={classes.logo}>
+          <Logo meepFontSize={isPhone ? "3rem" : isTablet ? "5rem" : "6rem"} textFontSize={isPhone ? "1rem" : isTablet ? "1.4rem" : "1.7rem"}/>
+        </div>
+      </Grid>
+      <Grid item>
+        <Conduct />
+      </Grid>
+    </Grid>
+  
+  const displayRightColumn = isTablet ?
+      null
+    :
+    <Grid item direction="column" xs={4} spacing={2} container>
+    {/* <Grid item>
+      <Leaderboard />
+    </Grid>
+    <Grid item>
+      <Messages />
+    </Grid> */}
+    <Grid item>
+      <Filters setLabels={setLabels} labels={labels} />
+    </Grid>
+  </Grid>
+
+  const displayCenterLogo = isTablet ? 
+    <Grid item xs={12}>
+      <Logo meepFontSize={isPhone ? "6rem" : "8rem"} textFontSize={isPhone ? "2rem" : "3rem"} height={isPhone ? "180px" : "250px"}/>
+    </Grid>
+    :
+    null
+  
+  const displayWelcomeCard = isPhone ? null :
+    <Grid item xs={12}>
+      <WelcomeCard />
+    </Grid>
+
+  const updateCardWidth = isTablet ? 12 : 8
+  const updateCenterWidth = isTablet ? 12 : 9
 
   return (
     <div>
       <NavBar isUserActive={true} username={username} avatarURL={avatarURL} userURL={userURL}/>
       <Container className={classes['center-container']} maxWidth='lg'>
-        <Grid wrap="nowrap" alignItems="flex-start" spacing={3} container>
-          <Grid item direction="column" xs={3} spacing={2} container>
-            <Grid item>
-              <div className={classes.logo}>
-                <Logo />
-              </div>
-            </Grid>
-            {/* <Grid item>
-              <Filters setLabels={setLabels}/>
-            </Grid> */}
-            <Grid item>
-              <Conduct />
-            </Grid>
-          </Grid>
+        <Grid wrap="nowrap" alignItems="flex-start" justify="space-between" container>
+          {displayLeftColumn}
 
-          <Grid item xs={9} spacing={2} direction="column" wrap="nowrap" container>
-            <Grid item xs={12}>
-              <WelcomeCard />
-            </Grid>
+          <Grid item xs={updateCenterWidth} spacing={2} direction="column" wrap="nowrap" container>
+            {displayCenterLogo}
+            {displayWelcomeCard}
 
             <Grid item xs={12} justify="space-between" spacing={0} container>
-              <Grid item direction="row" xs={8} spacing={1} alignContent="flex-start" container>
+              <Grid item direction="row" xs={updateCardWidth} spacing={1} alignContent="flex-start" container>
                 {displayResults}
               </Grid>
 
-              <Grid item direction="column" xs={4} spacing={2} container>
-                {/* <Grid item>
-                  <Leaderboard />
-                </Grid>
-                <Grid item>
-                  <Messages />
-                </Grid> */}
-                <Grid item>
-                  <Filters setLabels={setLabels} labels={labels} />
-                </Grid>
-              </Grid>
-              
+              {displayRightColumn}
             </Grid>
           </Grid>
         </Grid>
