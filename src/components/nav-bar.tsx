@@ -172,7 +172,7 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                 {changeLogo}
             </Grid>
             <Grid item xs={6}>
-                <TextField 
+                {/* <TextField 
                     fullWidth
                     placeholder="Search..."
                     variant="outlined"
@@ -184,7 +184,7 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                         )
                     }}
                     onKeyUp={searchChips}
-                />
+                /> */}
             </Grid>                    
             <Grid item xs={3} container alignItems="center" justify="flex-end" wrap="nowrap" spacing={3}>
                 {displayGitHubIcon}
