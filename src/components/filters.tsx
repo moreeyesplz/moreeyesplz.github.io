@@ -48,8 +48,7 @@ export default function FilterDisplay({filterState}: {filterState: FilterState})
     },[filterState.searchString, filterState.tags]);
 
     const handleFilterTags = ((e:any) => {
-        filterState.setSearchString(e.target.value);
-        console.dir(e.target)
+        filterState.setSearchString((e.target.value).toLowerCase());
     });
 
     const displayHeader = isTablet ? null :
