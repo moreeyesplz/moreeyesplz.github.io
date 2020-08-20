@@ -4,7 +4,7 @@ import NavBar from './components/nav-bar';
 import Logo from './components/Logo/logo';
 import ListCard from './components/list-card';
 // import Leaderboard from './components/leaderboard';
-import Filters from './components/filters';
+import Filters, { FilterState } from './components/filters';
 // import Messages from './components/message-feed';
 import Conduct from './components/code-of-conduct';
 import WelcomeCard from './components/welcome-card';
@@ -45,6 +45,9 @@ export default function Main(props: {octokit: Octokit}) {
   const [avatarURL, setAvatarURL] = useState("");
   const [userURL, setUserURL] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [tags, setTags] = useState<{name:string, color: string}[]>([]);
+  const [searchString, setSearchString] = useState<string>("");
+  const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
 
 
   const issues = useMemo(() =>{
@@ -62,6 +65,19 @@ export default function Main(props: {octokit: Octokit}) {
   }, [labels, issues]);
 
   useEffect(() => {
+    const fetchTags = async () => {
+      const githubTags = await props.octokit.issues.listLabelsForRepo({
+        owner: 'moreeyesplz',
+        repo: 'meeps',
+      });
+      setTags(githubTags.data.map(tag => {
+        return {name: tag.name, color: tag.color}
+      }));
+    }
+    fetchTags();
+  }, [props.octokit])
+
+  useEffect(() => {
     if(props.octokit){
       props.octokit.users.getAuthenticated().then((value) => {
         setUsername(value.data.login);
@@ -70,6 +86,15 @@ export default function Main(props: {octokit: Octokit}) {
       });
     };
   }, [props.octokit]);
+
+  const filterState: FilterState = {
+    setLabels, 
+    labels, 
+    tags, 
+    searchString,
+    setSearchString, 
+    activeTags, 
+    setActiveTags};
 
   const cards: JSX.Element[] = [];
   for (let i = 0; i !== issueIds.length; ++i) {
@@ -126,7 +151,7 @@ export default function Main(props: {octokit: Octokit}) {
       <Messages />
     </Grid> */}
     <Grid item>
-      <Filters setLabels={setLabels} labels={labels} />
+      <Filters filterState={filterState} />
     </Grid>
   </Grid>
 
@@ -147,7 +172,7 @@ export default function Main(props: {octokit: Octokit}) {
 
   return (
     <div>
-      <NavBar isUserActive={true} username={username} avatarURL={avatarURL} userURL={userURL}/>
+      <NavBar isUserActive={true} username={username} avatarURL={avatarURL} userURL={userURL} filterState={filterState} />
       <Container className={classes['center-container']} maxWidth='lg'>
         <Grid wrap="nowrap" alignItems="flex-start" justify="space-between" container>
           {displayLeftColumn}
@@ -157,7 +182,7 @@ export default function Main(props: {octokit: Octokit}) {
             {displayWelcomeCard}
 
             <Grid item xs={12} justify="space-between" spacing={0} container>
-              <Grid item direction="row" xs={updateCardWidth} spacing={1} alignContent="flex-start" container>
+              <Grid item direction="column" xs={updateCardWidth} spacing={1} justify="flex-start" container>
                 {displayResults}
               </Grid>
 

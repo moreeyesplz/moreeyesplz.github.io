@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Avatar, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover, useMediaQuery } from '@material-ui/core';
-// import {TextField, InputAdornment } from '@material-ui/core';
+import { AppBar, Toolbar, Avatar, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover, IconButton, useMediaQuery } from '@material-ui/core';
 // import { Badge } from '@material-ui/core';
-// import SearchIcon from '@material-ui/icons/Search';
 // import NotificationsIcon from '@material-ui/icons/Notifications';
+import Filter from './filters';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import Icon from './Logo/icon';
 import Eyes from './Logo/eyes';
+import clsx from 'clsx';
+import { FilterState } from './filters';
 
 const useStyles = makeStyles((theme) => ({
     "icon-hover": {
@@ -49,15 +51,29 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(0, 1),
     },
+    expand:{
+        transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "&:hover": {
+            backgroundColor: "white",
+            "& > *" : {
+                color: "#3f51b5"
+            }
+        }
+    },
+    expandOpen: {
+
+    }
 }));
 
-export default function NavBar(props: { isUserActive: boolean, username?: string, avatarURL?: string, userURL?: string }) {
+export default function NavBar (props: {isUserActive: boolean, username?:string, avatarURL?:string, userURL?:string, filterState?: FilterState}){
     const classes = useStyles();
     const isTablet = useMediaQuery('(max-width:960px)');
     const isPhone = useMediaQuery('(max-width:600px)');
     const [anchorMenu, setAnchorMenu] = useState(null);
     const [anchorIcon, setAnchorIcon] = useState(null);
     const [anchorTwitterIcon, setAnchorTwitterIcon] = useState(null);
+    const [expanded, setExpanded] = useState(false);
+    const [anchorTags, setAnchorTags] = useState(null);
 
     const loginNavTablet = isPhone ?
         null : isTablet ?
@@ -89,12 +105,20 @@ export default function NavBar(props: { isUserActive: boolean, username?: string
         setAnchorTwitterIcon(null);
     };
 
-    // const searchChips = (e:any) => {
-    //     console.log(e.target.value)
-    // }
+
+    const handleExpandClick = (event: any) => {
+        setExpanded(!expanded);
+        setAnchorTags(event.currentTarget);
+    };
+
+    const handleFilterClose = () => {
+        setAnchorTags(null);
+      };
 
     const open = Boolean(anchorIcon);
     const openTwitter = Boolean(anchorTwitterIcon);
+    const openTags = Boolean(anchorTags);
+    const id = open ? 'simple-popover' : undefined;
 
     const handleLogout = () => {
         localStorage.clear();
@@ -166,27 +190,44 @@ export default function NavBar(props: { isUserActive: boolean, username?: string
 
     const changeLogo = isPhone ? <Eyes /> : <Icon />
 
-    const displayNavBar = props.isUserActive ?
+    const displayFilterIcon = isTablet && props.filterState ? 
+        <div>
+            <IconButton
+                className={clsx(classes.expand, {
+                    [classes.expandOpen]: expanded,
+                })}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="filter by tags"
+                color="inherit">
+                <LocalOfferIcon />
+            </IconButton>
+            <Popover
+                id={id}
+                open={openTags}
+                anchorEl={anchorTags}
+                onClose={handleFilterClose}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+                }}
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+                }}
+            >
+            <Filter filterState={props.filterState}/>
+            </Popover>
+        </div>
+        :null
+
+    const displayNavBar = props.isUserActive ? 
         <Grid container alignItems="center" spacing={0}>
             <Grid item xs={3} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}>
                 {changeLogo}
-            </Grid>
-            <Grid item xs={6}>
-                {/* <TextField 
-                    fullWidth
-                    placeholder="Search..."
-                    variant="outlined"
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon />
-                            </InputAdornment>
-                        )
-                    }}
-                    onKeyUp={searchChips}
-                /> */}
-            </Grid>
-            <Grid item xs={3} container alignItems="center" justify="flex-end" wrap="nowrap" spacing={3}>
+            </Grid>            
+            <Grid item xs={9} container alignItems="center" justify="flex-end" wrap="nowrap" spacing={3}>
+                {displayFilterIcon}
                 {displayGitHubIcon}
                 {displayTwitterIcon}
                 {/* <Grid item className={classes["icon-hover"]}>

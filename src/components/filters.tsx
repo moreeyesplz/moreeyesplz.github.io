@@ -1,10 +1,10 @@
-import React, { useState, SetStateAction, Dispatch } from 'react';
-import { Card, CardContent, CardHeader, List, ListItem, Chip, makeStyles, Divider } from '@material-ui/core';
-// import {TextField, InputAdornment } from '@material-ui/core';
+import React, { SetStateAction, Dispatch, useMemo } from 'react';
+import { Card, CardContent, CardHeader, List, ListItem, Chip, makeStyles, Divider, useMediaQuery } from '@material-ui/core';
+import {TextField, InputAdornment } from '@material-ui/core';
 import CodeIcon from '@material-ui/icons/Code';
 import BuildIcon from '@material-ui/icons/BuildOutlined';
 import Star from '@material-ui/icons/StarBorderOutlined';
-// import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -26,91 +26,102 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-interface Filter {
-    label: string,
-    type: number,
-    enabled?: boolean
+export interface FilterState {
+    setLabels: Dispatch<SetStateAction<string[]>>, 
+    labels: string[],
+    tags: {name: string, color: string}[], 
+    searchString: string, 
+    setSearchString: Dispatch<SetStateAction<string>>, 
+    activeTags: Set<string>, 
+    setActiveTags: Dispatch<SetStateAction<Set<string>>>
 }
 
-export default function FilterDisplay(props: {setLabels: Dispatch<SetStateAction<string[]>>, labels: string[]}) {
+export default function FilterDisplay({filterState}: {filterState: FilterState}) {
     const classes = useStyles();
+    const isTablet = useMediaQuery('(max-width:960px)');
+    const filteredTags = useMemo(() => {
+        if(filterState.searchString.length === 0){
+            return filterState.tags;
+        } else {
+            return filterState.tags.filter(tag => tag.name.includes(filterState.searchString))
+        }
+    },[filterState.searchString, filterState.tags]);
 
-    const [chipData, setChipData] = useState<Filter[]>([
-        {label: "javascript", type: 0},
-        {label: "html", type: 0},
-        {label: "css", type: 0},
-        {label: "c++", type: 0},
-        {label: "c#", type: 0},
-        {label: "java", type: 0},
-        {label: "react", type: 1},
-        {label: "typescript", type: 1},
-        {label: "sass", type: 1},
-        {label: "unity", type: 1},
-        {label: "node.js", type: 1},
-        {label: "web dev", type: 2},
-        {label: "github", type: 2},
-        {label: "game dev", type: 2},
-        {label: "mobile apps", type: 2},
-        {label: "ui design", type: 2},
-        {label: "graphics", type: 2},
-        {label: "benchmark", type: 2},
-        {label: "api", type: 2}
-    ]);
+    const handleFilterTags = ((e:any) => {
+        filterState.setSearchString(e.target.value);
+    });
+
+    const displayHeader = isTablet ? null :
+    <div>
+        <CardHeader className={classes.header} title="🔖 Tags/Filter"/>
+        <Divider/>
+    </div>
 
     return (
         <Card elevation={0}>
             <CardContent className={classes["MuiCardContent-root"]}>
-                <CardHeader className={classes.header} title="🔖 Tags/Filter"/>
-                <Divider/>
+                { displayHeader }
                 <List>
                     <ListItem className={classes.labelContainer} disableGutters>
-                        {/* <TextField
+                        <TextField
                             id="tag-search" 
                             className={classes.searchTags}
+                            onChange={handleFilterTags}
                             placeholder="Search Tags" 
                             variant="outlined"
                             InputProps={{
                                 startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>
                             }}
+                            fullWidth
                             size="small"
-                        /> */}
-                        {chipData.map((data, index) => {
+                        />
+                        {filteredTags.sort((tagA: {name: string, color: string}, tagB: {name: string, color: string}) => {
+                                return tagA.color < tagB.color ? -1 : 1;
+                            })
+                            .map((tag, index) => {
                             let icon;
                             let color: "default" | "primary" | "secondary" = "default";
 
-                            if (data.type === 0){
+                            if (tag.color === "f50057"){
                                 icon = <CodeIcon />
                                 color = "secondary"
-                            } else if (data.type === 1){
+                            } else if (tag.color === "555555"){
                                 icon = <BuildIcon />
-                            } else if (data.type === 2) {
+                            } else if (tag.color === "3f51b5") {
                                 icon = <Star />
                                 color = "primary"
                             }
 
                             const handleClick = () => {
-                                let enabled = !data.enabled
-                                const newChipData = [...chipData];
-                                newChipData[index].enabled = enabled;
-                                setChipData(newChipData);
+                                const newActiveTags = new Set(filterState.activeTags)
+                                let enabled = false;
+                                if(newActiveTags.has(tag.name)){
+                                    newActiveTags.delete(tag.name);
+                                    enabled = false;
+                                } else {
+                                    newActiveTags.add(tag.name)
+                                    enabled = true;
+                                }
+                                filterState.setActiveTags(newActiveTags);
                                 
-                                const newLabels = [...props.labels];
+                                //check against card to see if tags are there.
+                                const newLabels = [...filterState.labels];
 
                                 if (enabled) {
-                                    newLabels.push(data.label.toLowerCase());
-                                    props.setLabels(newLabels);
+                                    newLabels.push(tag.name.toLowerCase());
+                                    filterState.setLabels(newLabels);
                                 } else if (!enabled) {
-                                    let filteredLabels = newLabels.filter(label => label !== data.label);
-                                    props.setLabels(filteredLabels);
+                                    let filteredLabels = newLabels.filter(label => label !== tag.name);
+                                    filterState.setLabels(filteredLabels);
                                 }
                             }
 
-                            let chipVariant: "default" | "outlined" = data.enabled ? "default" : "outlined";
+                            let chipVariant: "default" | "outlined" = filterState.activeTags.has(tag.name) ? "default" : "outlined";
 
                             return (
                                 <Chip
                                     key={index}
-                                    label={data.label}
+                                    label={tag.name}
                                     icon={icon}
                                     variant={chipVariant}
                                     color={color}

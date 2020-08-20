@@ -42,9 +42,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 100,
     [theme.breakpoints.down('md')]:{
       fontSize: "1.25rem",
-    },
-    [theme.breakpoints.down('sm')]:{
-      fontSize: "1rem",
     }
   },
   container: {

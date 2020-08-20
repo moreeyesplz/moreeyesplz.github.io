@@ -178,11 +178,11 @@ export default function ListCard(props: MeepRequestProps) {
 
 
     return (
-        <Card>
+        <Card> 
             <CardActionArea className={classes['card-action']} onClick={() => window.location.href = props.url}>
-                <CardContent>
+                <CardContent style={{width: "100%"}}>
                     <Grid spacing={8} container wrap="nowrap" >
-                        <Grid item direction="column"alignItems="flex-start" xs={1} spacing={1} container>
+                        <Grid item xs={1} spacing={1} container>
                             <Grid item>
                                 <Avatar className={classes.avatar} src={props.user.avatar} alt={props.user.name} onClick={() => window.location.href = props.user.url} />
                             </Grid>
@@ -215,8 +215,8 @@ export default function ListCard(props: MeepRequestProps) {
                                     </Popover> */}
                             </Grid>
                         </Grid>
-                        <Grid item xs={11} sm container>
-                            <Grid item direction="row" spacing={2} container>
+                        <Grid item xs={11} direction="column" wrap="nowrap" sm container>
+                            <Grid item spacing={2} container>
                                 <Grid item xs={12}>
                                     <Typography>
                                         <span className={classes.user} onClick={() => window.location.href = props.user.url}>{props.user.name}</span>
