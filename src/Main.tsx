@@ -69,6 +69,7 @@ export default function Main(props: {octokit: Octokit}) {
       const githubTags = await props.octokit.issues.listLabelsForRepo({
         owner: 'moreeyesplz',
         repo: 'meeps',
+        per_page: 100,
       });
       setTags(githubTags.data.map(tag => {
         return {name: tag.name, color: tag.color}
@@ -114,6 +115,7 @@ export default function Main(props: {octokit: Octokit}) {
             url: issue.user_url
           }}
           createdAt={issue.created_at}
+          tagData={tags}
         />
       </Grid>
     );

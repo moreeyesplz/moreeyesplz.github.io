@@ -68,34 +68,13 @@ const useStyles = makeStyles((theme) => ({
 })
 );
 
-const TagMapping: { [key: string]: number } = {
-    "javascript": 0,
-    "html": 0,
-    "css": 0,
-    "c++": 1,
-    "c#": 1,
-    "java": 1,
-    "react": 1,
-    "typeScript": 1,
-    "github": 1,
-    "sass": 1,
-    "unity": 1,
-    "node.js": 1,
-    "web dev": 2,
-    "game dev": 2,
-    "mobile apps": 2,
-    "ui design": 2,
-    "graphics": 2,
-    "benchmark": 2,
-    "api": 2
-}
-
 interface MeepRequestProps {
     title: string,
     url: string,
     tags: string[],
     user: { avatar: string, name: string, url: string },
-    createdAt: string
+    createdAt: string,
+    tagData: {name: string, color: string}[]
 };
 
 export default function ListCard(props: MeepRequestProps) {
@@ -176,6 +155,8 @@ export default function ListCard(props: MeepRequestProps) {
         return details;
     }
 
+    const tagMapping: {[key: string]: string } = {} 
+    props.tagData.forEach((tag) => tagMapping[`${tag.name}`] = `${tag.color}`);
 
     return (
         <Card> 
@@ -233,11 +214,11 @@ export default function ListCard(props: MeepRequestProps) {
                                     {props.tags.map((tag: string, index: number) => {
                                         const tagLowerCase = tag.toLowerCase();
                                         let color: "default" | "primary" | "secondary" = "default";
-                                        let dataMap = TagMapping[tagLowerCase];
+                                        let tagColor = tagMapping[tagLowerCase]
 
-                                        if (dataMap === 0) {
+                                        if (tagColor === "f50057") {
                                             color = "secondary";
-                                        } else if (dataMap === 2) {
+                                        } else if (tagColor === "3f51b5") {
                                             color = "primary";
                                         }
 
