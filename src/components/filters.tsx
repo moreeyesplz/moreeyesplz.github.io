@@ -49,6 +49,7 @@ export default function FilterDisplay({filterState}: {filterState: FilterState})
 
     const handleFilterTags = ((e:any) => {
         filterState.setSearchString(e.target.value);
+        console.dir(e.target)
     });
 
     const displayHeader = isTablet ? null :
@@ -56,6 +57,7 @@ export default function FilterDisplay({filterState}: {filterState: FilterState})
         <CardHeader className={classes.header} title="🔖 Tags/Filter"/>
         <Divider/>
     </div>
+
 
     return (
         <Card elevation={0}>
@@ -74,6 +76,7 @@ export default function FilterDisplay({filterState}: {filterState: FilterState})
                             }}
                             fullWidth
                             size="small"
+                            onClick={(e) => {filterState.setSearchString((e.target as HTMLInputElement).value)}}
                         />
                         {filteredTags.sort((tagA: {name: string, color: string}, tagB: {name: string, color: string}) => {
                                 return tagA.color < tagB.color ? -1 : 1;

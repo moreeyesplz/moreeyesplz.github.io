@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Avatar, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover, IconButton, useMediaQuery } from '@material-ui/core';
+import { AppBar, Toolbar, Avatar, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover, IconButton, useMediaQuery, Card } from '@material-ui/core';
 // import { Badge } from '@material-ui/core';
 // import NotificationsIcon from '@material-ui/icons/Notifications';
 import Filter from './filters';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import CloseIcon from '@material-ui/icons/Close';
 import Icon from './Logo/icon';
 import Eyes from './Logo/eyes';
 import clsx from 'clsx';
 import { FilterState } from './filters';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        overflowY: "scroll"
+    },
+    closeBtn: {
+        float: "right"
+    },
     "icon-hover": {
         transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
         borderRadius: "50%",
@@ -87,6 +94,9 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
 
     const handleClose = () => {
         setAnchorMenu(null);
+        if(props.filterState?.searchString.length === 0){
+            props.filterState.setSearchString('');
+        }
     };
 
     const handlePopoverOpen = (event: any) => {
@@ -216,7 +226,10 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                 horizontal: 'center',
                 }}
             >
-            <Filter filterState={props.filterState}/>
+                <Card className={classes.root}>
+                    <IconButton className={classes.closeBtn} onClick={handleFilterClose}><CloseIcon/></IconButton>
+                    <Filter filterState={props.filterState} />
+                </Card>
             </Popover>
         </div>
         :null
