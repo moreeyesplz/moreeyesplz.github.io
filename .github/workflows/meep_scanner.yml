@@ -6,3 +6,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: moreeyesplz/meep_scanner@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
