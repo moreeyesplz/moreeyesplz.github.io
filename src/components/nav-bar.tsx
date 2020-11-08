@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Avatar, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover, IconButton, useMediaQuery, Card } from '@material-ui/core';
+import { AppBar, Toolbar, Avatar, makeStyles, Grid, Menu, MenuItem, Divider, Typography, Button, Popover, IconButton, useMediaQuery, Paper } from '@material-ui/core';
 // import { Badge } from '@material-ui/core';
 // import NotificationsIcon from '@material-ui/icons/Notifications';
 import Filter from './filters';
@@ -226,10 +226,10 @@ export default function NavBar (props: {isUserActive: boolean, username?:string,
                 horizontal: 'center',
                 }}
             >
-                <Card className={classes.root}>
+                <Paper className={classes.root}>
                     <IconButton className={classes.closeBtn} onClick={handleFilterClose}><CloseIcon/></IconButton>
                     <Filter filterState={props.filterState} />
-                </Card>
+                </Paper>
             </Popover>
         </div>
         :null
