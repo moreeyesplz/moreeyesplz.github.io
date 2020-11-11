@@ -177,6 +177,7 @@ Contributions are what make the open source community such an amazing place to b
 ## :phone: Contact
 
 :mega: [@duchess_toffee](https://twitter.com/duchess_toffee) · [@m_ninepoints](https://twitter.com/m_ninepoints)
+<br/>
 :mailbox: hchai1991@gmail.com · jeremycong@gmail.com
 
 :octocat: [More Eyes, Plz! Github Repo](https://github.com/moreeyesplz)
