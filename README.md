@@ -56,7 +56,7 @@ To best explain how all the repos within [More Eyes, Plz](https://github.com/mor
 1. The [meep_scanner](https://github.com/moreeyesplz/meep_scanner) will run on every push. It will "scan" each commit for `[MEEP]`. If the commit contains `[MEEP]`, and the repo is public, then the [meep_scanner](https://github.com/moreeyesplz/meep_scanner) will send metadata to a Google Cloud Function.
 2. The [meeper](https://github.com/moreeyesplz/meeper) will now recieve the metadata from the [meep_scanner](https://github.com/moreeyesplz/meep_scanner) via the Google Cloud Function. This repo is where the bot credentials are hidden as enviornment variables. It will then create the issue on the [meeps](https://github.com/moreeyesplz/meeps/issues) repository as an issue, which will feed the [More Eyes, Plz!](http://moreeyesplz.com/) website In addition, it also creates the initial commit comment:
 
-<img src="src/assets/https://github.com/moreeyesplz/moreeyesplz.github.io/blob/master/src/assets/more-eyes-plz-demo.jpg" alt="themeepbot initial commit message example">
+<img src="src/assets/more-eyes-plz-demo.jpg" alt="themeepbot initial commit message example">
 
 3. The [themeepbot](https://github.com/moreeyesplz/themeepbot) is the webhook responder. It listens to the commit comments for a command. Currently the only command running is `close` written as `[MEEP close]`. When this is sent by the author, then themeepbot will close the issue and it will be removed from the website.
 
